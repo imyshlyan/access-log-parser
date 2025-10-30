@@ -5,11 +5,10 @@ public class Main {
     public static void main(String[] args) {
 
         int countFile = 0;
-        int countLine = 0;
-        int maxLenght = 0;
-        int minLenght = 0;
-
         while (true) {
+            int countLine = 0;
+            int maxLenght = 0;
+            int minLenght = 0;
             System.out.println("Укажите путь до файла");
             String path = new Scanner(System.in).nextLine();
             File file = new File(path);
@@ -34,15 +33,15 @@ public class Main {
                 String line;
                 while (true) {
                     try {
-                        countLine++;
                         if (!((line = reader.readLine()) != null)) break;
+                        countLine++;
                     } catch (IOException e) {
                         e.printStackTrace();
                         throw new RuntimeException(e);
                     }
                     int length = line.length();
-                    if (length>1024) {
-                        throw new ExceptionLongExceeded("Превышена длина строки в 1024 символ");
+                    if (length > 1024) {
+                        throw new ExceptionLongExceeded("В строке: " + countLine + " превышена длина в 1024 символ");
                     }
                     if (length > maxLenght) {
                         maxLenght = length;

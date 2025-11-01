@@ -31,24 +31,25 @@ public class Main {
                 BufferedReader reader =
                         new BufferedReader(fileReader);
                 String line;
-                while (true) {
-                    try {
+                try {
+                    while (true) {
                         if (!((line = reader.readLine()) != null)) break;
                         countLine++;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        throw new RuntimeException(e);
+
+                        int length = line.length();
+                        if (length > 1024) {
+                            throw new ExceptionLongExceeded("В строке: " + countLine + " превышена длина в 1024 символ");
+                        }
+                        if (length > maxLenght) {
+                            maxLenght = length;
+                        }
+                        if (minLenght == 0 || length < minLenght) {
+                            minLenght = length;
+                        }
                     }
-                    int length = line.length();
-                    if (length > 1024) {
-                        throw new ExceptionLongExceeded("В строке: " + countLine + " превышена длина в 1024 символ");
-                    }
-                    if (length > maxLenght) {
-                        maxLenght = length;
-                    }
-                    if (minLenght == 0 || length < minLenght) {
-                        minLenght = length;
-                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
                 System.out.println("Количество строк: " + countLine);
                 System.out.println("Самая длинная строка: " + maxLenght);
